@@ -10,14 +10,6 @@ import Home from "./pages/home.jsx";
 import Blank from "./pages/blank.jsx";
 
 class Components extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      base_url: this.props.base_url,
-      api_url: this.props.api_url,
-    };
-  }
-
   render() {
     return (
       <Fragment>
