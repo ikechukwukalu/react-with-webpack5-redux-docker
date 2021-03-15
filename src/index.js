@@ -9,7 +9,7 @@ import rootReducer from './components/redux'
 
 import "regenerator-runtime/runtime.js";
 
-const store = configureStore({ reducer: rootReducer })
+const store = configureStore({ reducer: rootReducer });
 
 ReactDOM.render(
     <Provider store={store}>
