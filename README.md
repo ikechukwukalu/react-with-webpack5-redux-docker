@@ -7,7 +7,7 @@ MY REACT APP WITH WEBPACK 5
 •	``npm i @reduxjs/toolkit redux react-redux``
 
 ## Add .babelrc
-•	``npm i -D @babel/core babel-loader @babel/preset-env @babel/preset-react @babel/plugin-proposal-class-properties``\
+•	``npm i -D regenerator-runtime @babel/core babel-loader @babel/preset-env @babel/preset-react @babel/plugin-proposal-class-properties``\
 •	Create a new ``.babelrc``\
 •	Add the following lines
 

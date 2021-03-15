@@ -7,6 +7,8 @@ import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import rootReducer from './components/redux'
 
+import "regenerator-runtime/runtime.js";
+
 const store = configureStore({ reducer: rootReducer })
 
 ReactDOM.render(
