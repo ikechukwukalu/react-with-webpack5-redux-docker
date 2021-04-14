@@ -84,7 +84,13 @@ module.exports = {
         new webpack.ProvidePlugin({
             $: 'jquery',
             jQuery: 'jquery',
-            'window.jQuery': 'jquery'
+            'window.jQuery': 'jquery',
+            axios: 'axios',
+            'window.axios': 'axios',
+            Toastify: 'toastify-js',
+            'window.Toastify': 'toastify-js',
+            _: 'lodash',
+            'window._': 'lodash'
         }),
     ]
 };
