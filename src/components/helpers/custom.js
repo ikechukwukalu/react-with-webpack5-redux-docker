@@ -1,6 +1,6 @@
 const button_loader = '&nbsp;<span class="spinner-border spinner-border-sm text-light mb-1"></span>';
 
-export const makeToast = (text = "This is a toast", type = "success", url = null) => {
+export const makeToast = (text = "This is a toast", type = "success", url = null, clickFunc = () => {}) => {
     var colorType = {
         success: "linear-gradient(to right, #00b09b, #96c93d)",
         warning: "linear-gradient(to right, #b00000, #f3c21f)",
@@ -16,7 +16,7 @@ export const makeToast = (text = "This is a toast", type = "success", url = null
         position: 'right', // `left`, `center` or `right`
         backgroundColor: colorType[type],
         stopOnFocus: true, // Prevents dismissing of toast on hover
-        onClick: function () { } // Callback after click
+        onClick: clickFunc // Callback after click
     }
     if (url !== null)
         json.destination = url;
