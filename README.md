@@ -332,4 +332,6 @@ pipelines:
             #  DELETE_FLAG: '<boolean>' # Optional. This is a option to delete old files before transferring new ones. Default: true.
 ```
 
+•	To start run ``docker-composer up``
+
 <p>See&nbsp;<a href="https://support.atlassian.com/bitbucket-cloud/docs/get-started-with-bitbucket-pipelines/">Bitbucket Pipelines</a> for more details</p>
