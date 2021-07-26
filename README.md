@@ -274,3 +274,62 @@ RewriteCond %{REQUEST_URI} !=/favicon.ico
 RewriteRule ^ index.html [L]
 </IfModule>
 ```
+
+## DOCKERIZE YOUR REACT APP (LIVE RELOAD INCLUSIVE)
+•	Create a new ``Dockerfile`` and add the following lines
+
+```
+FROM node:14.17.0-alpine
+WORKDIR /app
+COPY . /app
+EXPOSE 8080
+RUN npm install
+CMD ["npm", "start"]
+```
+
+•	Create a new ``docker-compose.yml`` and add the following lines as well
+```
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: .
+    ports:
+    - "8080:8080"
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+    volumes:
+      - /app/node_modules
+      - .:/app
+```
+
+## BITBUCKET CI/CD VIA FTP
+
+•	Create a new ``bitbucket-pipelines.yml`` and add the following lines
+```
+image: node:14.17.0
+pipelines:
+ branches:
+   master:
+    - step:
+       name: Production
+       services:
+         - docker
+       caches:
+         - node
+       script:
+         - npm install
+         - npm run build
+         - pipe: atlassian/ftp-deploy:0.3.6
+           variables:
+             USER: $FTP_USER
+             PASSWORD: $FTP_PASSWORD
+             SERVER: $FTP_SERVER
+             REMOTE_PATH: $FTP_REMOTE_PATH
+             LOCAL_PATH: $FTP_LOCAL_PATH # Optional - React build directory.
+            #  DEBUG: 'true' # Optional
+            #  DELETE_FLAG: '<boolean>' # Optional. This is a option to delete old files before transferring new ones. Default: true.
+```
+
+<p>See&nbsp;<a href="https://support.atlassian.com/bitbucket-cloud/docs/get-started-with-bitbucket-pipelines/">Bitbucket Pipelines</a> for more details</p>

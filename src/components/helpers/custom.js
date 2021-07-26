@@ -29,7 +29,12 @@ export const sendRequest = (form = {}, data = {}, thenFunc = () => { }, catchFun
             method: form.method,
             url: form.action,
             data: data,
-            headers: {}
+            headers: {
+                'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET, POST, PATCH, PUT, DELETE, OPTIONS",
+                "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token, Authorization, Accept,charset,boundary,Content-Length"
+            }
         })
             .then(thenFunc)
             .catch(catchFunc)
@@ -71,6 +76,45 @@ const submitForm = (thenFunc = null, catchFunc = null) => {
             sendRequest(form, data, thenFunc, catchFunc);
         });
     }
+}
+
+export const submitSpecificForm = (formID = null, thenFunc = null, catchFunc = null) => {
+    if (document.getElementById(formID)) {
+        $('body').off('submit', '#' + formID);
+        $('body').on('submit', '#' + formID, function (e) {
+            e.preventDefault();
+            var submit_button = $(this).find('button[type="submit"]');
+            const original_value = submit_button.html();
+            submit_button.html(original_value + button_loader);
+            submit_button.prop("disabled", true);
+
+            var form = e.target;
+            var data = new FormData(form);
+
+            if (typeof thenFunc !== 'function' || thenFunc === null)
+                thenFunc = (response) => {
+                    $(this).find('button[type="submit"]').html(original_value);
+                    $(this).find('button[type="submit"]').prop("disabled", false);
+                    if (response.data.status) {
+                        $(this)[0].reset();
+                        makeToast(response.data.message, "success");
+                    } else {
+                        makeToast(response.data.message, "danger");
+                    }
+                };
+            if (typeof catchFunc !== 'function' || catchFunc === null)
+                catchFunc = (e) => {
+                    $(this).find('button[type="submit"]').html(original_value);
+                    $(this).find('button[type="submit"]').prop("disabled", false);
+                    makeToast("Oopps, looks like something went wrong. Try again?", "danger");
+                };
+            sendRequest(form, data, thenFunc, catchFunc);
+        });
+    }
+}
+
+export const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 export default submitForm;
