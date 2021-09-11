@@ -309,34 +309,36 @@ services:
       - .:/app
 ```
 
+•	To start run ``docker-compose up``\
+•	To add new packages after installing them run ``docker-compose down -v``, ``docker-compose build`` and ``docker-compose up``
+
 ## BITBUCKET CI/CD VIA FTP
 
 •	Create a new ``bitbucket-pipelines.yml`` and add the following lines
 ```
 image: node:14.17.0
 pipelines:
- branches:
-   master:
-    - step:
-       name: Production
-       services:
-         - docker
-       caches:
-         - node
-       script:
-         - npm install
-         - npm run build
-         - pipe: atlassian/ftp-deploy:0.3.6
-           variables:
-             USER: $FTP_USER
-             PASSWORD: $FTP_PASSWORD
-             SERVER: $FTP_SERVER
-             REMOTE_PATH: $FTP_REMOTE_PATH
-             LOCAL_PATH: $FTP_LOCAL_PATH # Optional - React build directory.
-            #  DEBUG: 'true' # Optional
-            #  DELETE_FLAG: '<boolean>' # Optional. This is a option to delete old files before transferring new ones. Default: true.
+  branches:
+    master:
+      - step:
+          name: Production
+        services:
+          - docker
+        caches:
+          - node
+        script:
+          - npm install
+          - npm run build
+          - pipe: atlassian/ftp-deploy:0.3.6
+            variables:
+              USER: $FTP_USER
+              PASSWORD: $FTP_PASSWORD
+              SERVER: $FTP_SERVER
+              REMOTE_PATH: $FTP_REMOTE_PATH
+              LOCAL_PATH: $FTP_LOCAL_PATH # Optional - React build directory.
+              EXTRA_ARGS: '--exclude Logs/ --exclude .htaccess' # Exclude deleting Logs directory and .htacess file on the Remote Server
+              # DEBUG: 'true' # Optional
+              # DELETE_FLAG: 'false' # Optional. This is an option to delete old files before transferring new ones. Default: true.
 ```
-
-•	To start run ``docker-composer up``
 
 <p>See&nbsp;<a href="https://support.atlassian.com/bitbucket-cloud/docs/get-started-with-bitbucket-pipelines/">Bitbucket Pipelines</a> for more details</p>
