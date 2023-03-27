@@ -1,23 +1,38 @@
-MY REACT APP WITH WEBPACK 5
+# MY REACT APP WITH WEBPACK 5
+
 ## Install React JS
-•	``npm install -g create-react-app``
+
+``` shell
+npm install -g create-react-app
+```
+
 ## Start a new React project
-•	``npx create-react-app project``
+
+``` shell
+npx create-react-app project
+```
+
 ## Add redux
-•	``npm i @reduxjs/toolkit redux react-redux``
+
+``` shell
+npm i @reduxjs/toolkit redux react-redux
+```
 
 ## Add .babelrc
-•	``npm i -D regenerator-runtime @babel/core babel-loader @babel/preset-env @babel/preset-react @babel/plugin-proposal-class-properties``\
-•	Create a new ``.babelrc``\
-•	Add the following lines
 
+``` shell
+npm i -D regenerator-runtime @babel/core babel-loader @babel/preset-env @babel/preset-react @babel/plugin-proposal-class-properties`
 ```
+
+Create a new `.babelrc` and add the following:
+
+``` js
 {
-    "presets": [
+    presets: [
         "@babel/preset-env",
         "@babel/preset-react"
     ],
-    "plugins": [
+    plugins: [
         [
             "@babel/plugin-proposal-class-properties",
             {
@@ -27,12 +42,16 @@ MY REACT APP WITH WEBPACK 5
     ]
 }
 ```
-## Add postcss.config.js
-•	``npm i -D sass-loader postcss-loader css-loader style-loader postcss-preset-env node-sass``\
-•	Create a new ``.postcss.config.js``\
-•	Add the following lines
 
+## Add postcss.config.js
+
+``` shell
+npm i -D sass-loader postcss-loader css-loader style-loader postcss-preset-env node-sass
 ```
+
+Create a new `.postcss.config.js` and add the following:
+
+``` js
 module.exports = {
     plugins: {
         'postcss-preset-env': {
@@ -41,13 +60,18 @@ module.exports = {
     },
 }
 ```
-## Add Webpack 5 and the needed plugins
-•	``npm i -D webpack webpack-cli``\
-•	``npm i -D html-webpack-plugin clean-webpack-plugin mini-css-extract-plugin copy-webpack-plugin``\
-•	Create a ``webpack.config.js``\
-•	Add the following lines
 
+## Add Webpack 5 and the needed plugins
+
+``` shell
+npm i -D webpack webpack-cli
+
+npm i -D html-webpack-plugin clean-webpack-plugin mini-css-extract-plugin copy-webpack-plugin
 ```
+
+Create a `webpack.config.js` and add the following:
+
+``` js
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -67,16 +91,16 @@ module.exports = {
     mode: 'development',
     devServer: {
         historyApiFallback: true,
-        contentBase: path.resolve(__dirname, 'react-webpack'),
+        static: path.resolve(__dirname, 'react-webpack'),
         open: true,
         compress: true,
         hot: true,
         host: '0.0.0.0', // or 0.0.0.0
-        port: 8080, // For production - You may need to change this to 80 
-        watchOptions: {
-            aggregateTimeout: 500, // delay before reloading
-            poll: 1000 // enable polling since fsevents are not supported in docker
-        }
+        port: 8080, // For production - You may need to change this to 80
+    },
+    watchOptions: {
+        aggregateTimeout: 500, // delay before reloading
+        poll: 1000 // enable polling since fsevents are not supported in docker
     },
     module: {
         rules: [
@@ -139,131 +163,71 @@ module.exports = {
         new webpack.ProvidePlugin({
             $: 'jquery',
             jQuery: 'jquery',
-            'window.jQuery': 'jquery'
+            'window.jQuery': 'jquery',
+            axios: 'axios',
+            'window.axios': 'axios',
+            Toastify: 'toastify-js',
+            'window.Toastify': 'toastify-js',
+            _: 'lodash',
+            'window._': 'lodash'
         }),
     ]
 };
 ```
-•	Next, go to package.json and change
-```
-"scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  }
-  ```
 
-To
-```
-"scripts": {
-    "start": "webpack serve",
-    "build": "webpack --mode production"
-  },
-  ```
+## Add jest.config.js
 
-## REACT WITH EXTERNAL JS PLUGINS
-• Run ``npm install --save react-helmet``\
-• Within your ``src/components/scripts`` folder create a file called ``scripts.js``\
-• Add the following lines
-```
-import React, { Component } from 'react'; 
-import {Helmet} from "react-helmet"; 
+Create a `svgTransform.js` and add the following:
 
-class Scripts extends Component { 
-  render() { 
-    return ( 
-      <Helmet> 
-        <script id='helmet-script' src='js/vendors.js'></script> 
-      </Helmet> 
-    ); 
-  } 
-} 
-export default Scripts;
-```
-• Next for every component you create add the following code
-
-```
-import Scripts from './scripts/scripts';
+``` js
+module.exports = {
+    process() {
+      return {
+        code: `module.exports = {};`,
+      };
+    },
+    getCacheKey() {
+      // The output is always the same.
+      return "svgTransform";
+    },
+};
 ```
 
-```
-  componentWillUnmount() { 
-    document.getElementById('helmet-script').remove(); 
-  }
- ```
- 
- ```
-  render() { 
-    return (
-      <Fragment>
-        <div>HTML</div>
-        <Scripts /> 
-      </Fragment>
-    );
-  }
-```
+Create a `jest.config.js` and add the following:
 
-```
-cd src/assets/js
-```
-• Add external Js files into the array as shown in ```read.js``` and then run the following:
-
-```
-node read.js
-```
-## REACT WITH AUTO SCROLL UP AFTER PAGE NAVIGATION
-• Create a file within ``src/components/scripts`` named ``scroll.js`` and add the following code\
-•	Add the following lines
-
-```
-import React, { Component } from 'react'; 
-import {withRouter } from "react-router-dom"; 
-import $ from 'jquery'; 
-
-class ScrollToTop extends Component { 
-  componentDidUpdate(prevProps) { 
-    if (this.props.location !== prevProps.location) { 
-      $('html, body').animate({scrollTop:0}, 'slow') 
-    } 
-  } 
-  render() { 
-    return this.props.children 
-  } 
-} 
-export default withRouter(ScrollToTop);
-```
-
-• Inside your ``app.js`` file add the following lines
-```
-import React, { Component } from 'react';
-import { HashRouter as Router  } from "react-router-dom";
-import Components from './components/index.jsx';
-import ScrollToTop from './components/scripts/scroll.js';
-
-class App extends Component {
-  render() {
-    return (
-        <Router>
-          <ScrollToTop>
-            <Components />
-          </ScrollToTop>
-        </Router>
-    );
-  }
+``` js
+module.exports = {
+    transform: {
+        "^.+\\.jsx?$": "babel-jest",
+        "^.+\\.svg$": "<rootDir>/svgTransform.js"
+    },
+    moduleNameMapper: {
+     "^@/(.*svg)(\\?inline)$": "<rootDir>/src/$1",
+     "\\.(css|less|scss|sass)$": "identity-obj-proxy"
+   },
 }
+```
 
-export default App;
+Within the `package.json` and make this edit:
+
+``` json
+"scripts": {
+    "dev": "webpack-dev-server",
+    "build": "webpack",
+    "test": "jest --env=jsdom"
+  },
 ```
 
 ## WRAPPING UP
-•	Copy the ``index.html, favicon.ico, manifest.json`` file and all your directory folders into the src folder\
-•	You can delete the public folder\
-•	Inside the ``index.html`` file remove any %PUBLIC_FOLDER% in the link tags\
-•	Run ``npm start``\
-•	To build ``npm run build``\
-•	In your production file, create an .htaccess file and add the following lines.
-```
+
+- Copy the `index.html, favicon.ico, manifest.json` file and all your directory folders into the src folder
+- You can delete the public folder
+- Inside the `index.html` file remove any %PUBLIC_FOLDER% in the link tags
+- Run `npm start`
+- To build `npm run build`
+- In your production file, create an .htaccess file and add the following lines.
+
+``` .htaccess
 # Map all non-existing URLs to be processed by index.html,
 # so any URL that doesn't point to a JS file, CSS file, etc etc...
 # goes through my React app.
@@ -281,19 +245,22 @@ RewriteRule ^ index.html [L]
 ```
 
 ## DOCKERIZE YOUR REACT APP (LIVE RELOAD INCLUSIVE)
-•	Create a new ``Dockerfile`` and add the following lines
 
-```
-FROM node:14.17.0-alpine
+- Create a new ``Dockerfile`` and add the following lines:
+
+``` dockerfile
+FROM node:16-alpine3.15
 WORKDIR /app
 COPY . /app
 EXPOSE 8080
+RUN apk add --no-cache python3 make g++
 RUN npm install
-CMD ["npm", "start"]
+CMD ["npm", "run", "dev"]
 ```
 
-•	Create a new ``docker-compose.yml`` and add the following lines as well
-```
+Create a new `docker-compose.yml` and add the following lines:
+
+``` yml
 version: "3.9"
 
 services:
@@ -309,36 +276,5 @@ services:
       - .:/app
 ```
 
-•	To start run ``docker-compose up``\
-•	To add new packages after installing them run ``docker-compose down -v``, ``docker-compose build`` and ``docker-compose up``
-
-## BITBUCKET CI/CD VIA FTP
-
-•	Create a new ``bitbucket-pipelines.yml`` and add the following lines
-```
-image: node:14.17.0
-pipelines:
-  branches:
-    master:
-      - step:
-          name: Production
-        services:
-          - docker
-        caches:
-          - node
-        script:
-          - npm install
-          - npm run build
-          - pipe: atlassian/ftp-deploy:0.3.6
-            variables:
-              USER: $FTP_USER
-              PASSWORD: $FTP_PASSWORD
-              SERVER: $FTP_SERVER
-              REMOTE_PATH: $FTP_REMOTE_PATH
-              LOCAL_PATH: $FTP_LOCAL_PATH # Optional - React build directory.
-              EXTRA_ARGS: '--exclude Logs/ --exclude .htaccess' # Exclude deleting Logs directory and .htacess file on the Remote Server
-              # DEBUG: 'true' # Optional
-              # DELETE_FLAG: 'false' # Optional. This is an option to delete old files before transferring new ones. Default: true.
-```
-
-<p>See&nbsp;<a href="https://support.atlassian.com/bitbucket-cloud/docs/get-started-with-bitbucket-pipelines/">Bitbucket Pipelines</a> for more details</p>
+- To start run `docker-compose up`
+- To add new packages after installing them run `docker-compose down -v`, `docker-compose build` and `docker-compose up`

@@ -2,8 +2,6 @@ import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../logo.svg";
 
-import Scripts from "../scripts/scripts";
-
 import { useSelector } from 'react-redux'
 import { globalsSelector } from '../redux/globals'
 
@@ -31,7 +29,6 @@ const Blank = () => {
           </p>
         </header>
       </div>
-      <Scripts />
     </Fragment>
   );
 }

@@ -55,7 +55,6 @@
     "localforage": "^1.10.0",
     "lodash": "^4.17.21",
     "match-sorter": "^6.3.1",
-    "react-helmet": "^6.1.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.9.0",
     "redux": "^4.2.1",
