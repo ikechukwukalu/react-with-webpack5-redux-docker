@@ -3,7 +3,7 @@ name: Pull Repo WorkFlow
 on:
   pull_request:
     branches:
-      - main
+      - master
 
 jobs:
   app-tests:
