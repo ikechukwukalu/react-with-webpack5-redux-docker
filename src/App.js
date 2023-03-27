@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { HashRouter as Router } from "react-router-dom";
 import './App.css';
 import Components from './components/index.jsx';
-import ScrollToTop from './components/helpers/scroll.js';
 
 import { useDispatch, useSelector } from 'react-redux'
 import { setGlobals, globalsSelector } from './components/redux/globals'
@@ -16,12 +15,15 @@ const App = () => {
       dispatch(setGlobals())
   }, [dispatch]);
 
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
+  }, []);
+
   return (
-    <Router>
-      <ScrollToTop>
-        <Components />
-      </ScrollToTop>
-    </Router>
+    <Components />
   );
 }
 

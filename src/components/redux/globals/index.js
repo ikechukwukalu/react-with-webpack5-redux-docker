@@ -4,6 +4,7 @@ export const initialState = {
     base_url: '',
     api_url: ''
 }
+
 //Create a slice
 const globalsSlice = createSlice({
     name: 'globals',

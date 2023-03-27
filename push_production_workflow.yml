@@ -1,0 +1,52 @@
+#Run this command on your server "ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts".
+name: Push To Production WorkFlow
+
+on:
+  push:
+    branches: 
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v2
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.x
+      - name: Install dependencies
+        run: npm install
+      - name: Build
+        run: npm run build
+      - name: Test
+        run: npm test
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy package to cloud server
+        uses: appleboy/ssh-action@master
+        env:
+            PAT: ${{ secrets.PAT }}
+            DEPLOY_PATH: ${{ secrets.DEPLOY_PATH}}
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          envs: PAT, DEPLOY_PATH
+          script: |
+            sudo mkdir -p /tmp/repo
+            sudo chmod -R 777 /tmp/repo
+            cd /tmp/repo
+            sudo git clone https://$PAT@github.com/username/repo.git
+            cd /tmp/repo
+            sudo git checkout develop
+            sudo npm install && npm run build
+            sudo rm -r $DEPLOY_PATH/app-old
+            sudo mv $DEPLOY_PATH/app $DEPLOY_PATH/app-old
+            sudo mkdir -p $DEPLOY_PATH/app
+            sudo mv /tmp/repo/dist/* $DEPLOY_PATH/app
+            sudo rm -r /tmp/repo
+            sudo chmod -R 0755 $DEPLOY_PATH/app

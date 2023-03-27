@@ -17,16 +17,16 @@ module.exports = {
     mode: 'development',
     devServer: {
         historyApiFallback: true,
-        contentBase: path.resolve(__dirname, 'react-webpack'),
+        static: path.resolve(__dirname, 'react-webpack'),
         open: true,
         compress: true,
         hot: true,
         host: '0.0.0.0', // or 0.0.0.0
-        port: 8080, // For production - You may need to change this to 80 
-        watchOptions: {
-            aggregateTimeout: 500, // delay before reloading
-            poll: 1000 // enable polling since fsevents are not supported in docker
-        }
+        port: 8080, // For production - You may need to change this to 80
+    },
+    watchOptions: {
+        aggregateTimeout: 500, // delay before reloading
+        poll: 1000 // enable polling since fsevents are not supported in docker
     },
     module: {
         rules: [
