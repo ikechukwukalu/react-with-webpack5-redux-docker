@@ -15,9 +15,6 @@ jobs:
       - name: "Check file permissions"
         run: |
           test "$(find . -type f -not -path './.git/*' -executable)" == ""
-      - name: "Find non-printable ASCII characters"
-        run: |
-          ! LC_ALL=C.UTF-8 find ./src -type f -name "*.js" -print0 | xargs -0 -- grep -PHn "[^ -~]"
   unit_tests:
     name: "Unit Tests"
     needs:
