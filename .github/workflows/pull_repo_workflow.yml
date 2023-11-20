@@ -21,3 +21,10 @@ jobs:
           run: npm run build
         - name: Test
           run: npm test
+        - name: Run Snyk to check for vulnerabilities
+          uses: snyk/actions/node@master
+          env:
+            SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          with:
+            args: --all-projects
+            command: test
