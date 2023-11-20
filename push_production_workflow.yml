@@ -1,4 +1,3 @@
-#Run this command on your server "ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts".
 name: Push To Production WorkFlow
 
 on:
@@ -31,22 +30,29 @@ jobs:
         env:
             PAT: ${{ secrets.PAT }}
             DEPLOY_PATH: ${{ secrets.DEPLOY_PATH}}
+            DOT_HTACCESS: ${{ secrets.DOT_HTACCESS }}
+            ROBOTS_DOT_TEXT: ${{ secrets.ROBOTS_DOT_TEXT }}
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          envs: PAT, DEPLOY_PATH
+          envs: PAT, DEPLOY_PATH, DOT_HTACCESS, ROBOTS_DOT_TEXT
           script: |
             sudo mkdir -p /tmp/repo
             sudo chmod -R 777 /tmp/repo
-            cd /tmp/repo
+            cd /tmp
             sudo git clone https://$PAT@github.com/username/repo.git
             cd /tmp/repo
-            sudo git checkout develop
+            sudo git checkout main
             sudo npm install && npm run build
-            sudo rm -r $DEPLOY_PATH/app-old
-            sudo mv $DEPLOY_PATH/app $DEPLOY_PATH/app-old
-            sudo mkdir -p $DEPLOY_PATH/app
-            sudo mv /tmp/repo/dist/* $DEPLOY_PATH/app
+            sudo rm -r $DEPLOY_PATH/public_html-old
+            sudo mv $DEPLOY_PATH/public_html $DEPLOY_PATH/public_html-old
+            sudo mkdir -p $DEPLOY_PATH/public_html
+            sudo mv /tmp/repo/dist/* $DEPLOY_PATH/public_html
             sudo rm -r /tmp/repo
-            sudo chmod -R 0755 $DEPLOY_PATH/app
+            cd $DEPLOY_PATH/public_html
+            sudo touch .htaccess
+            echo "$DOT_HTACCESS" | sudo tee .htaccess
+            sudo touch robots.txt
+            echo "$ROBOTS_DOT_TEXT" | sudo tee robots.txt
+            sudo chmod -R 0755 $DEPLOY_PATH/public_html
