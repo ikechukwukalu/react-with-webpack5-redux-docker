@@ -2,7 +2,7 @@
 
 [![Known Vulnerabilities](https://snyk.io/test/github/ikechukwukalu/react-with-webpack-5-redux/badge.svg?style=flat-square)](https://snyk.io/test/github/ikechukwukalu/react-with-webpack-5-redux)
 [![GitHub issues](https://img.shields.io/github/issues/ikechukwukalu/react-with-webpack-5-redux?style=flat-square)](https://github.com/ikechukwukalu/react-with-webpack-5-redux/issues)
-[![Licence](https://img.shields.io/packagist/l/ikechukwukalu/react-with-webpack-5-redux?style=flat-square)](https://github.com/ikechukwukalu/react-with-webpack-5-redux/blob/main/LICENSE.md)
+[![Licence](https://img.shields.io/packagist/l/ikechukwukalu/react-with-webpack-5-redux?style=flat-square)](https://github.com/ikechukwukalu/react-with-webpack-5-redux/blob/master/LICENSE.md)
 
 ## Install React JS
 
