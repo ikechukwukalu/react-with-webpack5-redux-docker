@@ -38,8 +38,7 @@ async function main() {
         execSync('npm install');
 
         console.log('Removing useless files');
-        execSync('npx rimraf ./.git');
-        execSync('npx rimraf ./.github/react-with-webpack-5-redux.yml');
+        fs.rmSync(path.join(projectPath, '.github/workflows/react-with-webpack-5-redux.yml'))
         fs.rmdirSync(path.join(projectPath, 'bin'), { recursive: true });
 
         console.log('The installation is done, this is ready to use !');

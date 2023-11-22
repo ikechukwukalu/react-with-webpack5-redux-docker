@@ -1,6 +1,6 @@
 {
   "name": "react-with-webpack5-redux-docker",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "React with webpack 5",
   "main": "postcss.config.js",
   "scripts": {
@@ -67,7 +67,6 @@
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.10.0",
     "redux": "^4.2.1",
-    "rimraf": "^5.0.5",
     "toastify-js": "^1.12.0",
     "web-vitals": "^3.3.1"
   }
