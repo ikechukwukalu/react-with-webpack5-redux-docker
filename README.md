@@ -1,18 +1,22 @@
 # MY REACT APP WITH WEBPACK 5
 
-[![Known Vulnerabilities](https://snyk.io/test/github/ikechukwukalu/react-with-webpack-5-redux/badge.svg?style=flat-square)](https://snyk.io/test/github/ikechukwukalu/react-with-webpack-5-redux)
-[![GitHub issues](https://img.shields.io/github/issues/ikechukwukalu/react-with-webpack-5-redux?style=flat-square)](https://github.com/ikechukwukalu/react-with-webpack-5-redux/issues)
-[![Licence](https://img.shields.io/github/license/ikechukwukalu/react-with-webpack-5-redux?style=flat-square)](https://github.com/ikechukwukalu/react-with-webpack-5-redux/blob/master/LICENSE.md)
+[![Known Vulnerabilities](https://snyk.io/test/github/ikechukwukalu/react-with-webpack5-redux-docker/badge.svg?style=flat-square)](https://snyk.io/test/github/ikechukwukalu/react-with-webpack5-redux-docker)
+[![GitHub issues](https://img.shields.io/github/issues/ikechukwukalu/react-with-webpack5-redux-docker?style=flat-square)](https://github.com/ikechukwukalu/react-with-webpack5-redux-docker/issues)
+[![Licence](https://img.shields.io/github/license/ikechukwukalu/react-with-webpack5-redux-docker?style=flat-square)](https://github.com/ikechukwukalu/react-with-webpack5-redux-docker/blob/master/LICENSE.md)
 
-## Install React JS
+## Install Boilerplate
+
+```shell
+npm install -g react-with-webpack5-redux-docker
+
+npx create-react-boilerplate my-app
+```
+
+## How To SetUp Manually
 
 ``` shell
 npm install -g create-react-app
-```
 
-## Start a new React project
-
-``` shell
 npx create-react-app project
 ```
 
