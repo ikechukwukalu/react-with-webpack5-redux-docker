@@ -1,6 +1,7 @@
 # MY REACT APP WITH WEBPACK 5
 
 [![Known Vulnerabilities](https://snyk.io/test/github/ikechukwukalu/react-with-webpack5-redux-docker/badge.svg?style=flat-square)](https://snyk.io/test/github/ikechukwukalu/react-with-webpack5-redux-docker)
+[![NPM version](https://img.shields.io/npm/v/react-with-webpack5-redux-docker?style=flat-square)](https://www.npmjs.com/package/react-with-webpack5-redux-docker)
 [![GitHub issues](https://img.shields.io/github/issues/ikechukwukalu/react-with-webpack5-redux-docker?style=flat-square)](https://github.com/ikechukwukalu/react-with-webpack5-redux-docker/issues)
 [![Licence](https://img.shields.io/github/license/ikechukwukalu/react-with-webpack5-redux-docker?style=flat-square)](https://github.com/ikechukwukalu/react-with-webpack5-redux-docker/blob/master/LICENSE.md)
 
