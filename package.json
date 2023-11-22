@@ -1,5 +1,5 @@
 {
-  "name": "react-with-webpack-5-redux",
+  "name": "react-with-webpack5-redux-docker",
   "version": "1.0.0",
   "description": "React with webpack 5",
   "main": "postcss.config.js",
@@ -12,10 +12,19 @@
     "type": "git",
     "url": "git+https://github.com/ikechukwukalu/react-with-webpack-5-redux.git"
   },
-  "author": "ikechukwukalu",
+  "keywords": [
+    "react",
+    "webpack5",
+    "reduc",
+    "boilerplate"
+  ],
+  "author": "Kalu Ikechukwu",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ikechukwukalu/react-with-webpack-5-redux/issues"
+  },
+  "bin": {
+    "create-react-boilerplate": "./generate-app.js"
   },
   "homepage": "https://github.com/ikechukwukalu/react-with-webpack-5-redux#readme",
   "devDependencies": {
@@ -58,6 +67,7 @@
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.10.0",
     "redux": "^4.2.1",
+    "rimraf": "^5.0.5",
     "toastify-js": "^1.12.0",
     "web-vitals": "^3.3.1"
   }
