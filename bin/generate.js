@@ -7,14 +7,14 @@ const fs = require('fs');
 if (process.argv.length < 3) {
     console.log('You have to provide a name to your app.');
     console.log('For example :');
-    console.log('    npx create-react-boilerplate my-app');
+    console.log('    npx generate-react-boilerplate my-app');
     process.exit(1);
 }
 
 const projectName = process.argv[2];
 const currentPath = process.cwd();
 const projectPath = path.join(currentPath, projectName);
-const git_repo = 'https://github.com/ikechukwukalu/react-with-webpack-5-redux';
+const git_repo = 'https://github.com/ikechukwukalu/react-with-webpack5-redux-docker.git';
 
 try {
     fs.mkdirSync(projectPath);
@@ -39,6 +39,7 @@ async function main() {
 
         console.log('Removing useless files');
         execSync('npx rimraf ./.git');
+        execSync('npx rimraf ./.github/react-with-webpack-5-redux.yml');
         fs.rmdirSync(path.join(projectPath, 'bin'), { recursive: true });
 
         console.log('The installation is done, this is ready to use !');

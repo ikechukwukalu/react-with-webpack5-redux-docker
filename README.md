@@ -9,7 +9,7 @@
 ```shell
 npm install -g react-with-webpack5-redux-docker
 
-npx create-react-boilerplate my-app
+npx generate-react-boilerplate my-app
 ```
 
 ## How To SetUp Manually
@@ -157,9 +157,9 @@ module.exports = {
             template: "./src/index.html",
             filename: "./index.html"
         }),
-        new MiniCssExtractPlugin({ 
-            filename: "[name].css", 
-            chunkFilename: "[id].css" 
+        new MiniCssExtractPlugin({
+            filename: "[name].css",
+            chunkFilename: "[id].css"
         }),
         new CopyWebpackPlugin({
           patterns: [
@@ -240,7 +240,7 @@ Within the `package.json` and make this edit:
 # so any URL that doesn't point to a JS file, CSS file, etc etc...
 # goes through my React app.
 
-<IfModule mod_rewrite.c> 
+<IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
     </IfModule>
