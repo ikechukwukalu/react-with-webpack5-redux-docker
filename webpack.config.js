@@ -7,7 +7,7 @@ var webpack = require('webpack');
 
 module.exports = {
     entry: {
-        main: path.resolve(__dirname, './src/index.js'),
+        main: path.resolve(__dirname, './src/index.tsx'),
     },
     output: {
         path: path.resolve(__dirname, 'react-webpack'),
@@ -31,17 +31,10 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.(js|jsx)$/,
+                test: /\.(js|jsx|ts|tsx)$/,
                 exclude: path.resolve(__dirname, './node_modules'),
                 use: {
                     loader: "babel-loader"
-                }
-            },
-            {
-                test: /\.ts$/,
-                exclude: path.resolve(__dirname, './node_modules'),
-                use: {
-                    loader: "ts-loader"
                 }
             },
             {
@@ -96,6 +89,9 @@ module.exports = {
             'window.Toastify': 'toastify-js',
             _: 'lodash',
             'window._': 'lodash'
+        }),
+        new webpack.DefinePlugin({
+            process: {env: {}}
         }),
     ]
 };

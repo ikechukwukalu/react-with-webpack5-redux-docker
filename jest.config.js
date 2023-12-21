@@ -1,6 +1,7 @@
 module.exports = {
     transform: {
         "^.+\\.jsx?$": "babel-jest",
+        "^.+\\.tsx?$": "babel-jest",
         "^.+\\.svg$": "<rootDir>/svgTransform.js"
     },
     moduleNameMapper: {

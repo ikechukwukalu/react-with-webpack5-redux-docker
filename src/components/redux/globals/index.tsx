@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit';
 
 export const initialState = {
     base_url: '',
@@ -21,14 +21,14 @@ const globalsSlice = createSlice({
 export const { getGlobals } = globalsSlice.actions
 
 // A selector
-export const globalsSelector = (state) => state.globals
+export const globalsSelector = (state: any) => state.globals
 
 // The reducer
 export default globalsSlice.reducer
 
 // Asynchronous thunk action
-export function setGlobals() {
-    return async (dispatch) => {
+export function setGlobals(): any {
+    return (dispatch: any) => {
         const data = {
             base_url: window.location.origin,
             api_url: window.location.pathname

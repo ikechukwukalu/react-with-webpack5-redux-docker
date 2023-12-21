@@ -1,19 +1,17 @@
 import React, { useEffect } from 'react';
-import { HashRouter as Router } from "react-router-dom";
+import Components from './components/index.tsx';
+import { useDispatch, useSelector } from 'react-redux';
+import { setGlobals, globalsSelector } from './components/redux/globals/index.tsx';
 import './App.css';
-import Components from './components/index.jsx';
-
-import { useDispatch, useSelector } from 'react-redux'
-import { setGlobals, globalsSelector } from './components/redux/globals'
+import 'bootstrap';
 
 const App = () => {
   const dispatch = useDispatch();
   const { base_url, api_url } = useSelector(globalsSelector);
-  console.info(base_url, api_url);
 
   useEffect(() => {
       dispatch(setGlobals())
-  }, [dispatch]);
+  }, [base_url, api_url]);
 
   useEffect(() => {
     window.scrollTo({

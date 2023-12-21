@@ -208,6 +208,7 @@ Create a `jest.config.js` and add the following:
 module.exports = {
     transform: {
         "^.+\\.jsx?$": "babel-jest",
+        "^.+\\.tsx?$": "babel-jest",
         "^.+\\.svg$": "<rootDir>/svgTransform.js"
     },
     moduleNameMapper: {

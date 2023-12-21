@@ -1,29 +1,57 @@
+import Toastify from "toastify-js";
+import axios from "axios";
+import $ from "jquery";
+import { match } from "ts-pattern";
+
+type COLORTYPE = {
+    success: string,
+    warning: string,
+    info: string,
+    danger: string
+}
+
+type FORM = {
+    method: string,
+    action: string
+}
+
 const button_loader = '&nbsp;<span class="spinner-border spinner-border-sm text-light mb-1"></span>';
 
-export const makeToast = (text = "This is a toast", type = "success", url = null, clickFunc = () => {}) => {
-    var colorType = {
+export const makeToast: any = (text: string = "This is a toast", type: string = "success", url: string | null = null, clickFunc: any = () => { }): void => {
+    var colorType: COLORTYPE = {
         success: "linear-gradient(to right, #00b09b, #96c93d)",
         warning: "linear-gradient(to right, #b00000, #f3c21f)",
         info: "",
         danger: "#b00000"
     }
-    var json = {
+
+    match(type)
+        .with("success", () => type = colorType.success)
+        .with("warning", () => type = colorType.warning)
+        .with("info", () => type = colorType.info)
+        .with("danger", () => type = colorType.danger)
+        .otherwise(() => type = colorType.info);
+
+    var toastJson: Toastify.Options = {
         text: text,
         duration: 5000,
         newWindow: true,
         close: true,
         gravity: "top", // `top` or `bottom`
         position: 'right', // `left`, `center` or `right`
-        backgroundColor: colorType[type],
+        backgroundColor: type,
         stopOnFocus: true, // Prevents dismissing of toast on hover
         onClick: clickFunc // Callback after click
     }
-    if (url !== null)
-        json.destination = url;
-    Toastify(json).showToast();
+
+    if (url !== null) {
+        toastJson.destination = url;
+    }
+
+    Toastify(toastJson).showToast();
 }
 
-export const sendRequest = (form = {}, data = {}, thenFunc = () => { }, catchFunc = () => { }) => {
+export const sendRequest = (form: FORM, data: object = {}, thenFunc: any = () => { }, catchFunc: any = () => { }) => {
     try {
         axios({
             method: form.method,
@@ -43,7 +71,7 @@ export const sendRequest = (form = {}, data = {}, thenFunc = () => { }, catchFun
     }
 }
 
-const submitForm = (thenFunc = null, catchFunc = null) => {
+const submitForm = (thenFunc: Function | null = null, catchFunc: Function | null = null) => {
     if (document.getElementsByTagName("form")) {
         $('body').off('submit', 'form');
         $('body').on('submit', 'form', function (e) {
@@ -57,7 +85,7 @@ const submitForm = (thenFunc = null, catchFunc = null) => {
             var data = new FormData(form);
 
             if (typeof thenFunc !== 'function' || thenFunc === null)
-                thenFunc = (response) => {
+                thenFunc = (response: any) => {
                     $(this).find('button[type="submit"]').html(original_value);
                     $(this).find('button[type="submit"]').prop("disabled", false);
                     if (response.data.status) {
@@ -68,7 +96,7 @@ const submitForm = (thenFunc = null, catchFunc = null) => {
                     }
                 };
             if (typeof catchFunc !== 'function' || catchFunc === null)
-                catchFunc = (e) => {
+                catchFunc = (e: any) => {
                     $(this).find('button[type="submit"]').html(original_value);
                     $(this).find('button[type="submit"]').prop("disabled", false);
                     makeToast("Oopps, looks like something went wrong. Try again?", "danger");
@@ -78,7 +106,7 @@ const submitForm = (thenFunc = null, catchFunc = null) => {
     }
 }
 
-export const submitSpecificForm = (formID = null, thenFunc = null, catchFunc = null) => {
+export const submitSpecificForm = (formID: string, thenFunc: Function | null = null, catchFunc: Function | null = null) => {
     if (document.getElementById(formID)) {
         $('body').off('submit', '#' + formID);
         $('body').on('submit', '#' + formID, function (e) {
@@ -92,7 +120,7 @@ export const submitSpecificForm = (formID = null, thenFunc = null, catchFunc = n
             var data = new FormData(form);
 
             if (typeof thenFunc !== 'function' || thenFunc === null)
-                thenFunc = (response) => {
+                thenFunc = (response: any) => {
                     $(this).find('button[type="submit"]').html(original_value);
                     $(this).find('button[type="submit"]').prop("disabled", false);
                     if (response.data.status) {
@@ -103,7 +131,7 @@ export const submitSpecificForm = (formID = null, thenFunc = null, catchFunc = n
                     }
                 };
             if (typeof catchFunc !== 'function' || catchFunc === null)
-                catchFunc = (e) => {
+                catchFunc = (e: any) => {
                     $(this).find('button[type="submit"]').html(original_value);
                     $(this).find('button[type="submit"]').prop("disabled", false);
                     makeToast("Oopps, looks like something went wrong. Try again?", "danger");
@@ -113,8 +141,14 @@ export const submitSpecificForm = (formID = null, thenFunc = null, catchFunc = n
     }
 }
 
-export const capitalizeFirstLetter = (string) => {
+export const capitalizeFirstLetter = (string: string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+export const logout: Function = (e: any): void => {
+    e.preventDefault();
+    localStorage.clear();
+    location.href = '/';
 }
 
 export default submitForm;
