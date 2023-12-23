@@ -1,7 +1,7 @@
 {
   "name": "react-with-webpack5-redux-docker",
-  "version": "1.0.4",
-  "description": "React with webpack 5",
+  "version": "2.0.0",
+  "description": "React with webpack 5, docker and typescript",
   "main": "postcss.config.js",
   "scripts": {
     "dev": "webpack-dev-server",
@@ -77,6 +77,7 @@
     "lodash": "^4.17.21",
     "match-sorter": "^6.3.1",
     "react-bootstrap": "^2.9.1",
+    "react-form-input-validation": "^2.1.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.10.0",
     "redux": "^4.2.1",

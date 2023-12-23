@@ -2,6 +2,7 @@ import Toastify from "toastify-js";
 import axios from "axios";
 import $ from "jquery";
 import { match } from "ts-pattern";
+import { useFormInputValidation } from "react-form-input-validation";
 
 type COLORTYPE = {
     success: string,
@@ -71,7 +72,7 @@ export const sendRequest = (form: FORM, data: object = {}, thenFunc: any = () =>
     }
 }
 
-const submitForm = (thenFunc: Function | null = null, catchFunc: Function | null = null) => {
+export const submitForm = (thenFunc: Function | null = null, catchFunc: Function | null = null) => {
     if (document.getElementsByTagName("form")) {
         $('body').off('submit', 'form');
         $('body').on('submit', 'form', function (e) {
@@ -151,4 +152,12 @@ export const logout: Function = (e: any): void => {
     location.href = '/';
 }
 
-export default submitForm;
+export const validator: Function = (inputs: any = {}, rules: any = {}): null | Array<any> => {
+    if (typeof inputs != 'object' || typeof rules != 'object') {
+        console.log('inputs is a/an' + typeof inputs);
+        console.log('rules is a/an' + typeof rules);
+        return null;
+    }
+
+    return useFormInputValidation(inputs, rules);
+}

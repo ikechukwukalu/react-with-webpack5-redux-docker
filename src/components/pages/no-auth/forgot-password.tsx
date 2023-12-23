@@ -1,37 +1,41 @@
-import React, { Fragment } from "react";
-import { Link } from "react-router-dom";
-import { useSelector } from 'react-redux';
-import { globalsSelector } from '../../redux/globals/index.tsx';
+import React, { Fragment, useState, ChangeEventHandler } from "react";
+import Nav from '../../includes/noauth-nav.tsx';
+import { makeToast } from "../../helpers/custom.tsx";
+import  { validator } from '../../helpers/custom.tsx';
 
 const ForgotPassword = () => {
-  const { base_url, api_url } = useSelector(globalsSelector);
+  const base_url = process.env.REACT_APP_NAME;
+  const api_url = process.env.REACT_APP_API_URL;
+  const [inputs, setInputs] = useState({
+    email: "",
+  });
+  const rules: object = {
+    email: "required|email|min:5|max:150",
+  };
+  const [fields, errors, form] = validator(inputs, rules);
+
+  const onInputChange: ChangeEventHandler = (e: any) => {
+    let values: any = inputs;
+    values[e.target.name] = e.target.value;
+    setInputs(values);
+  };
+
+  const submitForm: Function = async (e: any) => {
+    e.preventDefault();
+
+    const isValid = await form.validate(e);
+    if (!isValid) {
+      return;
+    }
+
+    var data: any = e.target.elements;
+    makeToast("Email Sent!")
+  }
 
   return (
     <Fragment>
       <div id="app">
-        <nav className="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-          <div className="container">
-            <Link className="navbar-brand" to="/">
-              React Boilerplate
-            </Link>
-            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span className="navbar-toggler-icon"></span>
-            </button>
-
-            <div className="collapse navbar-collapse" id="navbarSupportedContent">
-              {/* <!-- Left Side Of Navbar --> */}
-              <ul className="navbar-nav me-auto">
-
-              </ul>
-
-              {/* <!-- Right Side Of Navbar --> */}
-              <ul className="navbar-nav ms-auto">
-                {/* <!-- Authentication Links --> */}
-
-              </ul>
-            </div>
-          </div>
-        </nav>
+        <Nav />
 
         <main className="py-4">
           <div className="container">
@@ -42,12 +46,15 @@ const ForgotPassword = () => {
 
                   <div className="card-body">
 
-                    <form method="POST" action="#">
+                    <form method="POST" onSubmit={submitForm} noValidate>
                         <div className="row mb-3">
                           <label htmlFor="email" className="col-md-4 col-form-label text-md-end">Email Address</label>
 
                           <div className="col-md-6">
-                            <input id="email" type="email" className="form-control " name="email" defaultValue="" required autoComplete="email" autoFocus />
+                            <input id="email" type="email" className="form-control " name="email" onChange={onInputChange} defaultValue="" required autoComplete="email" autoFocus />
+                          <label className="text-danger">
+                            {errors.email ? errors.email : ""}
+                          </label>
 
                           </div>
                         </div>
