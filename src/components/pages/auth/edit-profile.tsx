@@ -6,7 +6,7 @@ import { makeToast, validator } from "../../helpers/custom.tsx";
 
 const EditProfile = () => {
   const loggedUser = useSelector(userSelector);
-  const base_url = process.env.REACT_APP_NAME;
+  const base_url = process.env.REACT_APP_BASE_URL;
   const api_url = process.env.REACT_APP_API_URL;
   const [inputs, setInputs] = useState({
     first_name: "",

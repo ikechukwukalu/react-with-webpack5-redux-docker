@@ -5,93 +5,100 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path');
 var webpack = require('webpack');
 
-module.exports = {
-    entry: {
-        main: path.resolve(__dirname, './src/index.tsx'),
-    },
-    output: {
-        path: path.resolve(__dirname, 'react-webpack'),
-        filename: 'main.js',
-        publicPath: '/' // For production - Change to base directory folder name Eg. "https://localhost/BASENAME/" - publicPath: 'BASENAME'
-    },
-    mode: 'development',
-    devServer: {
-        historyApiFallback: true,
-        static: path.resolve(__dirname, 'react-webpack'),
-        open: true,
-        compress: true,
-        hot: true,
-        host: '0.0.0.0', // or 0.0.0.0
-        port: 8080, // For production - You may need to change this to 80
-    },
-    watchOptions: {
-        aggregateTimeout: 500, // delay before reloading
-        poll: 1000 // enable polling since fsevents are not supported in docker
-    },
-    module: {
-        rules: [
-            {
-                test: /\.(js|jsx|ts|tsx)$/,
-                exclude: path.resolve(__dirname, './node_modules'),
-                use: {
-                    loader: "babel-loader"
-                }
-            },
-            {
-                test: /\.html$/,
-                use: [
-                    {
-                        loader: "html-loader",
-                        options:
-                        {
-                            minimize: true
-                        }
+module.exports = (env) => {
+    const isProduction = env.NODE_ENV === 'production';
+    const envFile = isProduction ? '.env.production' : '.env';
+    const envPath = path.resolve(__dirname, envFile);
+    const envVars = require('dotenv').config({ path: envPath }).parsed || {};
+
+    return {
+        entry: {
+            main: path.resolve(__dirname, './src/index.tsx'),
+        },
+        output: {
+            path: path.resolve(__dirname, 'react-webpack'),
+                filename: 'main.js',
+                    publicPath: '/' // For production - Change to base directory folder name Eg. "https://localhost/BASENAME/" - publicPath: 'BASENAME'
+        },
+        mode: 'development',
+            devServer: {
+            historyApiFallback: true,
+                static: path.resolve(__dirname, 'react-webpack'),
+                    open: true,
+                        compress: true,
+                            hot: true,
+                                host: '0.0.0.0', // or 0.0.0.0
+                                    port: 8080, // For production - You may need to change this to 80
+        },
+        watchOptions: {
+            aggregateTimeout: 500, // delay before reloading
+                poll: 1000 // enable polling since fsevents are not supported in docker
+        },
+        module: {
+            rules: [
+                {
+                    test: /\.(js|jsx|ts|tsx)$/,
+                    exclude: path.resolve(__dirname, './node_modules'),
+                    use: {
+                        loader: "babel-loader"
                     }
-                ]
-            },
-            {
-                test: /\.(?:ico|gif|png|jpg|jpeg|cur)$/i,
-                type: 'asset/resource',
-            },
-            {
-                test: /\.(woff(2)?|eot|ttf|otf|svg|)$/,
-                type: 'asset/inline',
-            },
-            {
-                test: /\.(scss|css)$/,
-                use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader']
-            },
+                },
+                {
+                    test: /\.html$/,
+                    use: [
+                        {
+                            loader: "html-loader",
+                            options:
+                            {
+                                minimize: true
+                            }
+                        }
+                    ]
+                },
+                {
+                    test: /\.(?:ico|gif|png|jpg|jpeg|cur)$/i,
+                    type: 'asset/resource',
+                },
+                {
+                    test: /\.(woff(2)?|eot|ttf|otf|svg|)$/,
+                    type: 'asset/inline',
+                },
+                {
+                    test: /\.(scss|css)$/,
+                    use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader']
+                },
+            ]
+        },
+        plugins: [
+            new HtmlWebPackPlugin({
+                template: "./src/index.html",
+                filename: "./index.html"
+            }),
+            new MiniCssExtractPlugin({
+                filename: "[name].css",
+                chunkFilename: "[id].css"
+            }),
+            new CopyWebpackPlugin({
+                patterns: [
+                    { from: "src/assets", to: "assets" },
+                ],
+            }),
+            new CleanWebpackPlugin(),
+            new webpack.HotModuleReplacementPlugin(),
+            new webpack.ProvidePlugin({
+                $: 'jquery',
+                jQuery: 'jquery',
+                'window.jQuery': 'jquery',
+                axios: 'axios',
+                'window.axios': 'axios',
+                Toastify: 'toastify-js',
+                'window.Toastify': 'toastify-js',
+                _: 'lodash',
+                'window._': 'lodash'
+            }),
+            new webpack.DefinePlugin({
+                'process.env': JSON.stringify(envVars),
+            }),
         ]
-    },
-    plugins: [
-        new HtmlWebPackPlugin({
-            template: "./src/index.html",
-            filename: "./index.html"
-        }),
-        new MiniCssExtractPlugin({ 
-            filename: "[name].css", 
-            chunkFilename: "[id].css" 
-        }),
-        new CopyWebpackPlugin({
-          patterns: [
-            { from: "src/assets", to: "assets" },
-          ],
-        }),
-        new CleanWebpackPlugin(),
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.ProvidePlugin({
-            $: 'jquery',
-            jQuery: 'jquery',
-            'window.jQuery': 'jquery',
-            axios: 'axios',
-            'window.axios': 'axios',
-            Toastify: 'toastify-js',
-            'window.Toastify': 'toastify-js',
-            _: 'lodash',
-            'window._': 'lodash'
-        }),
-        new webpack.DefinePlugin({
-            process: {env: {}}
-        }),
-    ]
+    }
 };

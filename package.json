@@ -4,8 +4,8 @@
   "description": "React with webpack 5, docker and typescript",
   "main": "postcss.config.js",
   "scripts": {
-    "dev": "webpack-dev-server",
-    "build": "webpack",
+    "dev": "NODE_ENV=development webpack-dev-server",
+    "build": "NODE_ENV=production webpack",
     "test": "jest --env=jsdom"
   },
   "repository": {
@@ -59,7 +59,6 @@
     "@reduxjs/toolkit": "^1.9.4",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
-    "@types/axios": "^0.14.0",
     "@types/jest": "^29.5.11",
     "@types/jquery": "^3.5.29",
     "@types/node": "^20.10.5",
@@ -67,9 +66,9 @@
     "@types/react-dom": "^18.2.18",
     "@types/react-redux": "^7.1.33",
     "@types/toastify-js": "^1.12.3",
-    "axios": "^1.6.0",
-    "babel-jest": "^29.5.0",
+    "babel-jest": "^29.7.0",
     "bootstrap": "^5.3.2",
+    "dotenv": "^16.3.1",
     "jest": "^29.5.0",
     "jest-environment-jsdom": "^29.5.0",
     "jquery": "^3.6.4",

@@ -11,7 +11,7 @@ type USER = {
 }
 
 const Login = () => {
-  const base_url = process.env.REACT_APP_NAME;
+  const base_url = process.env.REACT_APP_BASE_URL;
   const api_url = process.env.REACT_APP_API_URL;
   const [inputs, setInputs] = useState({
     email: "",

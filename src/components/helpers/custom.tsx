@@ -1,5 +1,4 @@
 import Toastify from "toastify-js";
-import axios from "axios";
 import $ from "jquery";
 import { match } from "ts-pattern";
 import { useFormInputValidation } from "react-form-input-validation";
@@ -54,16 +53,15 @@ export const makeToast: any = (text: string = "This is a toast", type: string = 
 
 export const sendRequest = (form: FORM, data: object = {}, thenFunc: any = () => { }, catchFunc: any = () => { }) => {
     try {
-        axios({
+        fetch(form.action, {
             method: form.method,
-            url: form.action,
-            data: data,
             headers: {
                 'Content-Type': 'application/json',
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "GET, POST, PATCH, PUT, DELETE, OPTIONS",
-                "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token, Authorization, Accept,charset,boundary,Content-Length"
-            }
+                "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token, Authorization, Accept, charset, boundary, Content-Length"
+            },
+            body: JSON.stringify(data)
         })
             .then(thenFunc)
             .catch(catchFunc)

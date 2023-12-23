@@ -1,11 +1,10 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from 'react-redux';
-import { globalsSelector } from '../../redux/globals/index.tsx';
 import { Stack } from 'react-bootstrap';
 
 const Welcome = () => {
-  const { base_url, api_url } = useSelector(globalsSelector);
+  const base_url = process.env.REACT_APP_BASE_URL;
+  const api_url = process.env.REACT_APP_API_URL;
 
   return (
     <Fragment>
