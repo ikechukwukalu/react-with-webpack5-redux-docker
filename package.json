@@ -1,6 +1,6 @@
 {
   "name": "react-with-webpack5-redux-docker",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "React with webpack 5, docker and typescript",
   "main": "postcss.config.js",
   "scripts": {
